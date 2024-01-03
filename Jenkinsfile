@@ -46,7 +46,11 @@ pipeline{
             steps{
                 script{
                     def SonarQube_Server = 'sonar-server'
-                    staticCodeAnalysis(SonarQube_Server)
+                    def ProjectKey = 'Go-Server'
+                    staticCodeAnalysis(
+                        credentialsId: SonarQube_Server,
+                        projectKey: ProjectKey
+                    )
                 }
             }
         }
