@@ -54,6 +54,17 @@ pipeline{
                 }
             }
         }
+        stage('Quality Gate Status'){
+            when{ expression {
+                params.Action == 'Create'
+            } }
+            steps{
+                script{
+                    def SonarQube_Token = 'sonar-token'
+                    qualityGateStatus(SonarQube_Server)
+                }
+            }
+        }
 
     }
 }
