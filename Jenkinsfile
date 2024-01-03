@@ -3,9 +3,21 @@
 pipeline{
     agent any 
 
+    parameters{
+        choice(name: 'Action', choices: 'Create\nDestroy', description: "Choose Create\nDestroy")
+    }
+
+    environment {
+        SCANNER_HOME=tool 'sonar-scanner'
+    }
+
     stages{
 
+        
         stage('Git Checkout'){
+            when{ expression {
+                params.Action == 'Create'
+            } }
             steps{
                 script{
                     gitCheckout(
@@ -17,9 +29,27 @@ pipeline{
         }
 
         stage('Unit Testing'){
+            when{ expression {
+                params.Action == 'Create'
+            } }
             steps{
                 script{
                     goTest()
+                }
+            }
+        }
+
+        stage('SonarQube Analysis'){
+            when{ expression {
+                params.Action == 'Create'
+            } }
+            steps{
+                    def SonarQube_Server = 'sonar-server'
+                    staticCodeAnalysis(
+                        projectName: "Golang-WebServer",
+                        projectKey: "Golang-WebServer",
+                        credentialsId: SonarQube_Server,
+                    )
                 }
             }
         }
