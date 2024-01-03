@@ -50,7 +50,6 @@ pipeline{
                         projectKey: "Golang-WebServer",
                         credentialsId: SonarQube_Server,
                     )
-                }
             }
         }
 
