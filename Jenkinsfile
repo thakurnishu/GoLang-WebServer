@@ -61,7 +61,7 @@ pipeline{
             steps{
                 script{
                     def SonarQube_Token = 'sonar-token'
-                    qualityGateStatus(SonarQube_Server)
+                    qualityGateStatus(SonarQube_Token)
                 }
             }
         }
