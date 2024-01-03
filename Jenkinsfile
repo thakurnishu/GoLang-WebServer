@@ -16,5 +16,13 @@ pipeline{
             }
         }
 
+        stage('Unit Testing'){
+            steps{
+                script{
+                    goTest()
+                }
+            }
+        }
+
     }
 }
