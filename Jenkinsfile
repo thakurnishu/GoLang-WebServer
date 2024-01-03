@@ -65,6 +65,17 @@ pipeline{
                 }
             }
         }
+        stage('GO Build'){
+            when{ expression {
+                params.Action == 'Create'
+            } }
+            steps{
+                script{
+                    def buildName = 'WebServerApp'
+                    goBuild(buildName)
+                }
+            }
+        }
 
     }
 }
