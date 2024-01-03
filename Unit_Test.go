@@ -57,4 +57,3 @@ func TestHelloHandler(t *testing.T) {
 		t.Errorf("Handler returned unexpected body: got %v want %v", rr.Body.String(), expected)
 	}
 }
-
