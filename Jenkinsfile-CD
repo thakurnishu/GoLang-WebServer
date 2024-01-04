@@ -1,0 +1,26 @@
+@Library('Jenkins-Shared-Lib') _
+
+pipeline{
+    agent any
+
+    environment{
+        // AZURE_SUBSCRIPTION_ID = credentials('subscription_id')
+        // AZURE_TENANT_ID = credentials('tenant_id')
+        // SERVICE_PRINCIPAL_ID = credentials('principal_id')
+        // SERVICE_PRINCIPAL_PASSWORD = credentials('principal_password')
+        STORAGE_KEY = credentials('azure_storage_key')
+    }
+
+    stages{
+        
+        stage('Terraform Initialization'){
+            steps{
+                script{
+                    sh 'cd AKS_Module'
+                    terraInit(STORAGE_KEY)
+                }
+            }
+        }
+
+    }
+}
