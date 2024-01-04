@@ -99,6 +99,17 @@ pipeline{
                 }
             }
         }
+        stage('DockerHub Image Push'){
+            when{ expression {
+                params.Action == 'Create'
+            } }
+            steps{
+                script{
+                    def dockerCredId = 'docker'
+                    dockerhubPush("${params.ImageName}", "${params.DockerHubUserNane}", "${params.ImageTag}", dockerCredId)
+                }
+            }
+        }
 
     }
 }
