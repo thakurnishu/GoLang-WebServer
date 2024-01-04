@@ -5,6 +5,9 @@ pipeline{
 
     parameters{
         choice(name: 'Action', choices: 'Create\nDestroy', description: "Choose Create\nDestroy")
+        string(name: 'ImageName', description: "Name of Docker Image", defaultValue: 'gowebserver')
+        string(name: 'ImageTag', description: "Docker Image Tag", defaultValue: 'v1')
+        string(name: 'DockerHubUserNane', description: "Name of Dockerhub user", defaultValue: 'mahakal0510')
     }
 
     environment {
@@ -73,6 +76,16 @@ pipeline{
                 script{
                     def buildName = 'WebServerApp'
                     goBuild(buildName)
+                }
+            }
+        }
+        stage('DOCKER Image Build'){
+            when{ expression {
+                params.Action == 'Create'
+            } }
+            steps{
+                script{
+                    dockerBuild("${params.ImageName}","${params.DockerHubUserNane}","${params.ImageTag}")
                 }
             }
         }
