@@ -16,8 +16,6 @@ pipeline{
         stage('Terraform Initialization'){
             steps{
                 script{
-                    sh 'ls'
-                    sh 'cd AKS_Module'
                     terraInit(STORAGE_KEY)
                 }
             }
