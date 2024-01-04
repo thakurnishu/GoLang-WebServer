@@ -4,10 +4,10 @@ pipeline{
     agent any 
 
     parameters{
-        choice(name: 'Action', choices: 'Create\nDestroy', description: "Choose Create\nDestroy")
+        choice(name: 'Action', choices: 'Create\nDestroy', description: "Choose \nCreate\nDestroy")
         string(name: 'ImageName', description: "Name of Docker Image", defaultValue: 'gowebserver')
         string(name: 'ImageTag', description: "Docker Image Tag", defaultValue: 'v1')
-        string(name: 'DockerHubUserNane', description: "Name of Dockerhub user", defaultValue: 'mahakal0510')
+        string(name: 'DockerHubUserName', description: "Name of Dockerhub user", defaultValue: 'mahakal0510')
     }
 
     environment {
