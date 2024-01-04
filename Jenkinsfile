@@ -106,7 +106,7 @@ pipeline{
             steps{
                 script{
                     def dockerCredId = 'docker'
-                    dockerhubPush("${params.ImageName}", "${params.DockerHubUserNane}", "${params.ImageTag}", dockerCredId)
+                    dockerhubPush("${params.ImageName}", "${params.DockerHubUserName}", "${params.ImageTag}", dockerCredId)
                 }
             }
         }
