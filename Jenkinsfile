@@ -89,6 +89,16 @@ pipeline{
                 }
             }
         }
+        stage('DOCKER Image Scan: TRIVY'){
+            when{ expression {
+                params.Action == 'Create'
+            } }
+            steps{
+                script{
+                    dockerImageScan("${params.ImageName}","${params.DockerHubUserNane}")
+                }
+            }
+        }
 
     }
 }
