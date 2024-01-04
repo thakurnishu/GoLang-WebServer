@@ -4,10 +4,10 @@ pipeline{
     agent any
 
     environment{
-        // AZURE_SUBSCRIPTION_ID = credentials('subscription_id')
-        // AZURE_TENANT_ID = credentials('tenant_id')
-        // SERVICE_PRINCIPAL_ID = credentials('principal_id')
-        // SERVICE_PRINCIPAL_PASSWORD = credentials('principal_password')
+        AZURE_SUBSCRIPTION_ID = credentials('subscription_id')
+        AZURE_TENANT_ID = credentials('tenant_id')
+        SERVICE_PRINCIPAL_ID = credentials('principal_id')
+        SERVICE_PRINCIPAL_PASSWORD = credentials('principal_password')
         STORAGE_KEY = credentials('azure_storage_key')
     }
 
@@ -17,6 +17,19 @@ pipeline{
             steps{
                 script{
                     terraInit(STORAGE_KEY)
+                }
+            }
+        }
+
+        stage('Terraform Plan'){
+            steps{
+                script{
+                    terraPlan(
+                        SUBSCRIPTION_ID: AZURE_SUBSCRIPTION_ID,
+                        TENANT_ID: AZURE_TENANT_ID,
+                        PRINCIPAL_ID: SERVICE_PRINCIPAL_ID,
+                        PRINCIPAL_PASSWORD: SERVICE_PRINCIPAL_PASSWORD
+                    )
                 }
             }
         }
