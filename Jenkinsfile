@@ -99,7 +99,7 @@ pipeline{
                 }
             }
         }
-        stage('DockerHub Image Push'){
+        stage('DOCKER Image Push: Dockerhub'){
             when{ expression {
                 params.Action == 'Create'
             } }
