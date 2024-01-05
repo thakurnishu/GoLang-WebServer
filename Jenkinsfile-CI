@@ -2,13 +2,6 @@
 
 pipeline{
     agent any 
-
-    // parameters{
-    //     string(name: 'ImageName', description: "Name of Docker Image", defaultValue: 'gowebserver')
-    //     string(name: 'ImageTag', description: "Docker Image Tag", defaultValue: "v${BUILD_NUMBER}")
-    //     string(name: 'DockerHubUserName', description: "Name of Dockerhub user", defaultValue: 'mahakal0510')
-    // }
-
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
         JENKINS_USER= credentials('jenkins-user')
@@ -21,7 +14,6 @@ pipeline{
         IMAGETAG= "v${BUILD_NUMBER}"
         DOCKERHUB_USER= 'mahakal0510' 
     }
-
     stages{
         stage('Clean WorkSpace'){
             steps{
