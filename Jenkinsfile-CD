@@ -48,7 +48,10 @@ pipeline{
         stage('Installing ArgoCD'){
             steps{
                 script{
-                    installArgoCDToK8S()
+                    sh """
+                        chmod +x InstallArgoCD.sh
+                        sh InstallArgoCD.sh
+                    """
                 }
             }
         }
