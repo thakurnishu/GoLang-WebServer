@@ -18,8 +18,8 @@ pipeline{
         JENKINS_CD_JOB_NAME= 'GO-webserver-CD'
         JENKINS_CD_JOB_TOKEN=  'GO-webserver-CD-Job-Token'
         IMAGENAME=  'gowebserver'
-        IMAGETAG= "v${BUID_NUMBER}"
-        DOCKERHUB_USER= 'mahakal0510'
+        IMAGETAG= "v${BUILD_NUMBER}"
+        DOCKERHUB_USER= 'mahakal0510' 
     }
 
     stages{
@@ -85,7 +85,7 @@ pipeline{
         stage('DOCKER Image Scan: TRIVY'){
             steps{
                 script{
-                    dockerImageScan("${params.ImageName}","${params.DockerHubUserName}")
+                    dockerImageScan("${IMAGENAME}","${DOCKERHUB_USER}")
                 }
             }
         }
@@ -93,7 +93,7 @@ pipeline{
             steps{
                 script{
                     def dockerCredId = 'docker'
-                    dockerhubPush("${params.ImageName}", "${params.DockerHubUserName}", "${params.ImageTag}", dockerCredId)
+                    dockerhubPush("${IMAGENAME}", "${DOCKERHUB_USER}", "${IMAGETAG}", dockerCredId)
                 }
             }
         }
