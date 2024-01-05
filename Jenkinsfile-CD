@@ -45,15 +45,12 @@ pipeline{
                 }
             }
         }
-        // stage('Install ArgoCD') {
-        //     script {
-        //         def isArgoCDInstalled = sh(script: 'kubectl get all -n argocd', returnStatus: true) == 0
-        //         if (!isArgoCDInstalled) {
-        //             sh 'kubectl apply -n argocd -f argocd-installation.yaml'
-        //         } else {
-        //             echo 'ArgoCD is already installed. Skipping installation.'
-        //         }
-        //     }
-        // }
+        stage('Installing ArgoCD'){
+            steps{
+                script{
+                    installArgoCDToK8S()
+                }
+            }
+        }
     }
 }
