@@ -3,11 +3,11 @@
 pipeline{
     agent any 
 
-    parameters{
-        string(name: 'ImageName', description: "Name of Docker Image", defaultValue: 'gowebserver')
-        string(name: 'ImageTag', description: "Docker Image Tag", defaultValue: "v${BUILD_NUMBER}")
-        string(name: 'DockerHubUserName', description: "Name of Dockerhub user", defaultValue: 'mahakal0510')
-    }
+    // parameters{
+    //     string(name: 'ImageName', description: "Name of Docker Image", defaultValue: 'gowebserver')
+    //     string(name: 'ImageTag', description: "Docker Image Tag", defaultValue: "v${BUILD_NUMBER}")
+    //     string(name: 'DockerHubUserName', description: "Name of Dockerhub user", defaultValue: 'mahakal0510')
+    // }
 
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
@@ -17,6 +17,9 @@ pipeline{
         JENKINS_PORT= credentials('jenkins-port')
         JENKINS_CD_JOB_NAME= 'GO-webserver-CD'
         JENKINS_CD_JOB_TOKEN=  'GO-webserver-CD-Job-Token'
+        IMAGENAME=  'gowebserver'
+        IMAGETAG= "v${BUID_NUMBER}"
+        DOCKERHUB_USER= 'mahakal0510'
     }
 
     stages{
@@ -75,7 +78,7 @@ pipeline{
         stage('DOCKER Image Build'){
             steps{
                 script{
-                    dockerBuild("${params.ImageName}","${params.DockerHubUserName}","${params.ImageTag}")
+                    dockerBuild("${IMAGENAME}","${DOCKERHUB_USER}","${IMAGETAG}")
                 }
             }
         }
@@ -104,7 +107,7 @@ pipeline{
                         jenkinsPort: JENKINS_PORT,
                         jenkinsJob: JENKINS_CD_JOB_NAME,
                         jenkinsJobToken: JENKINS_CD_JOB_TOKEN,
-                        imageTag: "${params.ImageTag}"
+                        imageTag: "${IMAGETAG}"
                     )
                 }
             }
