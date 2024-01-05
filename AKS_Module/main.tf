@@ -12,4 +12,5 @@ module "aks" {
   pool_name    = var.pool_name
   node_count   = var.node_count
   size_of_node = var.node_size
+  depends_on = [ azurerm_resource_group.rg ]
 }

@@ -17,4 +17,5 @@ resource "azurerm_kubernetes_cluster" "aks" {
 resource "local_file" "kubeconfig" {
   content = azurerm_kubernetes_cluster.aks.kube_config_raw
   filename = "kubeconfig"
+  depends_on = [ azurerm_kubernetes_cluster.aks ]
 }
