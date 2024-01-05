@@ -4,7 +4,6 @@ pipeline{
     agent any 
 
     parameters{
-        choice(name: 'Action', choices: 'Create\nDestroy', description: "Choose \nCreate\nDestroy")
         string(name: 'ImageName', description: "Name of Docker Image", defaultValue: 'gowebserver')
         string(name: 'ImageTag', description: "Docker Image Tag", defaultValue: "v${BUILD_NUMBER}")
         string(name: 'DockerHubUserName', description: "Name of Dockerhub user", defaultValue: 'mahakal0510')
@@ -18,9 +17,6 @@ pipeline{
 
         
         stage('Git Checkout'){
-            when{ expression {
-                params.Action == 'Create'
-            } }
             steps{
                 script{
                     gitCheckout(
@@ -32,9 +28,6 @@ pipeline{
         }
 
         stage('Unit Testing'){
-            when{ expression {
-                params.Action == 'Create'
-            } }
             steps{
                 script{
                     goTest()
@@ -43,9 +36,6 @@ pipeline{
         }
 
         stage('SonarQube Analysis'){
-            when{ expression {
-                params.Action == 'Create'
-            } }
             steps{
                 script{
                     def SonarQube_Server = 'sonar-server'
@@ -58,9 +48,6 @@ pipeline{
             }
         }
         stage('Quality Gate Status'){
-            when{ expression {
-                params.Action == 'Create'
-            } }
             steps{
                 script{
                     def SonarQube_Token = 'sonar-token'
@@ -69,9 +56,6 @@ pipeline{
             }
         }
         stage('GO Build'){
-            when{ expression {
-                params.Action == 'Create'
-            } }
             steps{
                 script{
                     def buildName = 'WebServerApp'
@@ -80,9 +64,6 @@ pipeline{
             }
         }
         stage('DOCKER Image Build'){
-            when{ expression {
-                params.Action == 'Create'
-            } }
             steps{
                 script{
                     dockerBuild("${params.ImageName}","${params.DockerHubUserName}","${params.ImageTag}")
@@ -90,9 +71,6 @@ pipeline{
             }
         }
         stage('DOCKER Image Scan: TRIVY'){
-            when{ expression {
-                params.Action == 'Create'
-            } }
             steps{
                 script{
                     dockerImageScan("${params.ImageName}","${params.DockerHubUserName}")
@@ -100,9 +78,6 @@ pipeline{
             }
         }
         stage('DOCKER Image Push: Dockerhub'){
-            when{ expression {
-                params.Action == 'Create'
-            } }
             steps{
                 script{
                     def dockerCredId = 'docker'
@@ -110,6 +85,5 @@ pipeline{
                 }
             }
         }
-
     }
 }
