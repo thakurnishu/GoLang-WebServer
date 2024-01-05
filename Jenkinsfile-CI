@@ -11,6 +11,12 @@ pipeline{
 
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
+        JENKINS_USER= credentials('jenkins-user')
+        JENKINS_USER_TOKEN= credentials('jenkins-user-token')
+        JENKINS_IP= credentials('jenkins-ip')
+        JENKINS_PORT= credentials('jenkins-port')
+        JENKINS_CD_JOB_NAME= 'GO-webserver-CD'
+        JENKINS_CD_JOB_TOKEN=  'GO-webserver-CD-Job-Token'
     }
 
     stages{
@@ -82,6 +88,21 @@ pipeline{
                 script{
                     def dockerCredId = 'docker'
                     dockerhubPush("${params.ImageName}", "${params.DockerHubUserName}", "${params.ImageTag}", dockerCredId)
+                }
+            }
+        }
+        stage('Triggering CD pipeline'){
+            steps{
+                script{
+                    triggerJenkinsPipeline(
+                        jenkinsUser: JENKINS_USER,
+                        jenkinsUserToken: JENKINS_USER_TOKEN,
+                        jenkinsIP: JENKINS_IP,
+                        jenkinsPort: JENKINS_PORT,
+                        jenkinsJob: JENKINS_CD_JOB_NAME,
+                        jenkinsJobToken: JENKINS_CD_JOB_TOKEN,
+                        imageTag: "${params.ImageTag}"
+                    )
                 }
             }
         }
