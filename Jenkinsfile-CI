@@ -41,56 +41,56 @@ pipeline{
             }
         }
 
-        // stage('SonarQube Analysis'){
-        //     steps{
-        //         script{
-        //             def SonarQube_Server = 'sonar-server'
-        //             def ProjectKey = 'Go-Server'
-        //             staticCodeAnalysis(
-        //                 credentialsId: SonarQube_Server,
-        //                 projectKey: ProjectKey
-        //             )
-        //         }
-        //     }
-        // }
-        // stage('Quality Gate Status'){
-        //     steps{
-        //         script{
-        //             def SonarQube_Token = 'sonar-token'
-        //             qualityGateStatus(SonarQube_Token)
-        //         }
-        //     }
-        // }
-        // stage('GO Build'){
-        //     steps{
-        //         script{
-        //             def buildName = 'WebServerApp'
-        //             goBuild(buildName)
-        //         }
-        //     }
-        // }
-        // stage('DOCKER Image Build'){
-        //     steps{
-        //         script{
-        //             dockerBuild("${params.ImageName}","${params.DockerHubUserName}","${params.ImageTag}")
-        //         }
-        //     }
-        // }
-        // stage('DOCKER Image Scan: TRIVY'){
-        //     steps{
-        //         script{
-        //             dockerImageScan("${params.ImageName}","${params.DockerHubUserName}")
-        //         }
-        //     }
-        // }
-        // stage('DOCKER Image Push: Dockerhub'){
-        //     steps{
-        //         script{
-        //             def dockerCredId = 'docker'
-        //             dockerhubPush("${params.ImageName}", "${params.DockerHubUserName}", "${params.ImageTag}", dockerCredId)
-        //         }
-        //     }
-        // }
+        stage('SonarQube Analysis'){
+            steps{
+                script{
+                    def SonarQube_Server = 'sonar-server'
+                    def ProjectKey = 'Go-Server'
+                    staticCodeAnalysis(
+                        credentialsId: SonarQube_Server,
+                        projectKey: ProjectKey
+                    )
+                }
+            }
+        }
+        stage('Quality Gate Status'){
+            steps{
+                script{
+                    def SonarQube_Token = 'sonar-token'
+                    qualityGateStatus(SonarQube_Token)
+                }
+            }
+        }
+        stage('GO Build'){
+            steps{
+                script{
+                    def buildName = 'WebServerApp'
+                    goBuild(buildName)
+                }
+            }
+        }
+        stage('DOCKER Image Build'){
+            steps{
+                script{
+                    dockerBuild("${params.ImageName}","${params.DockerHubUserName}","${params.ImageTag}")
+                }
+            }
+        }
+        stage('DOCKER Image Scan: TRIVY'){
+            steps{
+                script{
+                    dockerImageScan("${params.ImageName}","${params.DockerHubUserName}")
+                }
+            }
+        }
+        stage('DOCKER Image Push: Dockerhub'){
+            steps{
+                script{
+                    def dockerCredId = 'docker'
+                    dockerhubPush("${params.ImageName}", "${params.DockerHubUserName}", "${params.ImageTag}", dockerCredId)
+                }
+            }
+        }
         stage('Triggering CD pipeline'){
             steps{
                 script{
