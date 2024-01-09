@@ -9,7 +9,6 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: Run test
+            - name: Building GO Executable binary
               run: |
-                echo Add other actions to build,
-                echo test, and deploy your project. 
+                /usr/local/go/bin/go build -o ${buildName} 
