@@ -21,6 +21,11 @@ on: push
 
 jobs:
 
+    Git-Checkout:
+        runs-on: [self-hosted, Linux, X64, Laptop]
+        steps:
+          - uses: actions/checkout@v4
+
     Build: 
         runs-on: [self-hosted, Linux, X64, Laptop]
         steps:
