@@ -19,6 +19,6 @@ jobs:
             - uses: actions/checkout@v4
 
             - name: Testing Go code
-              run : /usr/local/bin/go test -count=1
+              run : /usr/local/go/bin/go test -count=1
 
 
