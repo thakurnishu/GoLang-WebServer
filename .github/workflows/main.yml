@@ -84,7 +84,7 @@ jobs:
         steps:
           - name: Triggering CD pipeline
             run: |
-              ls ${GITHUB_WORKSPACE}
+              ls ${GITHUB_WORKSPACE}/.github/workflows/GolangScript
 
     # Trigger-CD-Workflow:
     #     runs-on: [self-hosted, Linux, X64, Laptop]
