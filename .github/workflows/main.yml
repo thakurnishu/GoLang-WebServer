@@ -10,8 +10,7 @@ jobs:
             # - uses: actions/checkout@v4
 
             - name: Building GO Executable binary
-              run: |
-                /usr/local/go/bin/go build -o GolangWebServer
+              run: /usr/local/go/bin/go build -o GolangWebServer
 
     unit-testing:
         runs-on: [self-hosted, Linux, X64, Laptop]
@@ -21,5 +20,16 @@ jobs:
             - name: Testing Go code
               run : /usr/local/go/bin/go test -count=1
         needs: [build]
+    
+    sonar-scanning:
+        runs-on: [self-hosted, Linux, X64, Laptop]
+        steps:
+            - name: SonarQube Analysis
+              run: |
+                sonar-scanner \
+                -Dsonar.projectKey=Go-Server \
+                -Dsonar.sources=. \
+                -Dsonar.host.url=http://localhost:9000 \
+                -Dsonar.login=squ_102817965eb76b2d6de4557fe235d36da0930f0f 
 
 
