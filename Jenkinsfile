@@ -39,6 +39,14 @@ pipeline{
                 }
             }
         }
+        stage('GO Build'){
+            steps{
+                script{
+                    def buildName = 'WebServerApp'
+                    goBuild(buildName)
+                }
+            }
+        }
         stage('SonarQube Analysis'){
             steps{
                 script{
@@ -56,14 +64,6 @@ pipeline{
                 script{
                     def SonarQube_Token = 'sonar-token'
                     qualityGateStatus(SonarQube_Token)
-                }
-            }
-        }
-        stage('GO Build'){
-            steps{
-                script{
-                    def buildName = 'WebServerApp'
-                    goBuild(buildName)
                 }
             }
         }
