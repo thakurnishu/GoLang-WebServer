@@ -90,7 +90,7 @@ jobs:
         steps:
           - name: Triggering CD pipeline
             run: |
-              ls -la ${GITHUB_WORKSPACE}
+              ls -la ${GITHUB_WORKSPACE}/.github/workflows/GolangScript
         needs: [Push-Image]
 
     # Trigger-CD-Workflow:
