@@ -90,6 +90,7 @@ jobs:
         steps:
           - name: Triggering CD pipeline
             run: |
+              chmod +x ${GITHUB_WORKSPACE}/.github/workflows/trigger-CD-Pipeline
               sh ${GITHUB_WORKSPACE}/.github/workflows/trigger-CD-Pipeline \
                 ${TRIGGER_REPO_PAT_TOKEN} ${TRIGGER_REPO_OWNER} ${TRIGGER_REPO_NAME} \
                 ${TRIGGER_EVENT_TYPE} ${IMAGE_TAG} ${IMAGE_NAME}
