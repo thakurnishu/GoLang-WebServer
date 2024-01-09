@@ -20,5 +20,6 @@ jobs:
 
             - name: Testing Go code
               run : /usr/local/go/bin/go test -count=1
+        needs: [build]
 
 
