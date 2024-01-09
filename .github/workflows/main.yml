@@ -1,33 +1,51 @@
 name: CI pipeline for Golang WebSerer
 
+env:
+    GO_BUILD_NAME: "WebServerApp"
+
+    SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECTKEY }}
+    SONAR_URL: ${{ secrets.SONAR_URL }}
+    SONAR_TOKEN: ${{ secrets.SONARTOKEN }}
+
+    DOCKERHUB_USER: "mahakal0510"
+    IMAGE_NAME: "gowebserver"
+    IMAGE_TAG: "v00"
+
+
 on: push
 
 jobs:
 
-    build: 
+    Build: 
         runs-on: [self-hosted, Linux, X64, Laptop]
         steps:
             - name: Building GO Executable binary
-              run: /usr/local/go/bin/go build -o GolangWebServer
+              run: /usr/local/go/bin/go build -o ${GO_BUILD_NAME}
 
-    unit-testing:
+    Unit-Testing:
         runs-on: [self-hosted, Linux, X64, Laptop]
         steps:
             - name: Testing Go code
               run : /usr/local/go/bin/go test -count=1
-        needs: [build]
+        needs: [Build]
     
-    sonar-scanning:
+    Sonar-Scanning:
         runs-on: [self-hosted, Linux, X64, Laptop]
         steps:
             - name: SonarQube Analysis
               run: |
                 sonar-scanner \
-                -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} \
+                -Dsonar.projectKey=${SONAR_PROJECTKEY} \
                 -Dsonar.sources=. \
-                -Dsonar.host.url=${{ secrets.SONAR_URL }} \
-                -Dsonar.login=${{ secrets.SONARTOKEN }} 
-        needs: [unit-testing]
-    
+                -Dsonar.host.url=${SONAR_URL} \
+                -Dsonar.login=${SONAR_TOKEN} 
+        needs: [Unit-Testing, Build]
 
-
+    Build-Image:
+        runs-on: [self-hosted, Linux, X64, Laptop]
+        steps:
+            - name: Builing Docker Image
+              run: |
+                docker build -t ${DOCKERHUB_USER}/${IMAGE_NAME} .
+                docker image tag ${DOCKERHUB_USER}/${IMAGE_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+                docker image tag ${DOCKERHUB_USER}/${IMAGE_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
