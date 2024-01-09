@@ -31,6 +31,7 @@ jobs:
         steps:
             - name: Building GO Executable binary
               run: /usr/local/go/bin/go build -o ${GO_BUILD_NAME}
+        needs: [Git-Checkout]
 
     Unit-Testing:
         runs-on: [self-hosted, Linux, X64, Laptop]
