@@ -3,12 +3,22 @@ name: CI pipeline for Golang WebSerer
 on: push
 
 jobs:
+
     build: 
         runs-on: [self-hosted, Linux, X64, Laptop]
-
         steps:
             - uses: actions/checkout@v4
 
             - name: Building GO Executable binary
               run: |
                 /usr/local/go/bin/go build -o GolangWebServer
+
+    unit-testing:
+        runs-on: [self-hosted, Linux, X64, Laptop]
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Testing Go code
+              run : /usr/local/bin/go test -count=1
+
+
