@@ -25,6 +25,8 @@ jobs:
     runs-on: [self-hosted, Linux, X64, Laptop]
     steps:
       - uses: actions/checkout@v4
+      - name: test
+        run : cd .github
 
   # Build: 
   #   runs-on: [self-hosted, Linux, X64, Laptop]
