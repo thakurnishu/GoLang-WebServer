@@ -2,7 +2,9 @@ FROM golang:alpine3.19 AS build
 
 WORKDIR /app
 
-COPY . /app
+COPY ./static /app/static
+COPY ./go.mod /app/
+COPY ./*.go /app/
 
 RUN go build -o WebServerApp .
 
