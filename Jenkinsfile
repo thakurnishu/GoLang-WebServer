@@ -32,18 +32,18 @@ pipeline{
                 }
             }
         }
-        stage('Unit Testing'){
-            steps{
-                script{
-                    goTest()
-                }
-            }
-        }
         stage('GO Build'){
             steps{
                 script{
                     def buildName = 'WebServerApp'
                     goBuild(buildName)
+                }
+            }
+        }
+        stage('Unit Testing'){
+            steps{
+                script{
+                    goTest()
                 }
             }
         }
