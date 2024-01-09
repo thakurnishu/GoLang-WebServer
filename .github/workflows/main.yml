@@ -31,5 +31,7 @@ jobs:
                 -Dsonar.sources=. \
                 -Dsonar.host.url=http://localhost:9000 \
                 -Dsonar.login=squ_102817965eb76b2d6de4557fe235d36da0930f0f 
+        needs: [unit-testing]
+    
 
 
