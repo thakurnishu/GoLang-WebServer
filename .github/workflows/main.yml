@@ -39,7 +39,7 @@ jobs:
                 -Dsonar.sources=. \
                 -Dsonar.host.url=${SONAR_URL} \
                 -Dsonar.login=${SONAR_TOKEN} 
-        needs: [Unit-Testing, Build]
+        needs: [Unit-Testing]
 
     Build-Image:
         runs-on: [self-hosted, Linux, X64, Laptop]
@@ -49,3 +49,4 @@ jobs:
                 docker build -t ${DOCKERHUB_USER}/${IMAGE_NAME} .
                 docker image tag ${DOCKERHUB_USER}/${IMAGE_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
                 docker image tag ${DOCKERHUB_USER}/${IMAGE_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+        needs: [Sonar-Scanning]
