@@ -11,4 +11,4 @@ jobs:
 
             - name: Building GO Executable binary
               run: |
-                /usr/local/go/bin/go build -o ${buildName} 
+                /usr/local/go/bin/go build -o GolangWebServer
